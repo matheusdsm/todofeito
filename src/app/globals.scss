@@ -203,7 +203,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .sidenav-toggle-btn {
   position: fixed;
-  top: calc(var(--header-height) + 0.5rem);
+  top: calc(var(--header-height) + var(--cds-spacing-05));
+  margin-top: calc(var(--header-height) + var(--cds-spacing-07) + var(--cds-spacing-05));
   z-index: 9001;
   width: 2rem;
   height: 2rem;
@@ -550,8 +551,13 @@ body:has(.side-nav-wrapper.closed) .app-content {
     padding: var(--cds-spacing-06);
   }
 
+  :root {
+    --sidenav-width: 14rem;
+  }
+
   .sidenav-toggle-btn {
-    left: var(--cds-spacing-04) !important;
+    top: calc(var(--header-height) + var(--cds-spacing-05));
+    margin-top: calc(var(--header-height) + var(--cds-spacing-08));
   }
 }
 
@@ -562,6 +568,19 @@ body:has(.side-nav-wrapper.closed) .app-content {
 
   .app-content {
     padding: var(--cds-spacing-05);
+  }
+
+  :root {
+    --sidenav-width: 14rem;
+  }
+
+  .sidenav-toggle-btn {
+    top: calc(var(--header-height) + var(--cds-spacing-05));
+    margin-top: calc(var(--header-height) + var(--cds-spacing-08) + var(--cds-spacing-05));
+  }
+
+  body:has(.side-nav-wrapper.open) .sidenav-toggle-btn {
+    margin-top: calc(var(--header-height) + var(--cds-spacing-08) + var(--cds-spacing-05));
   }
 
   .page-header {
