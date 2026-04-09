@@ -252,6 +252,10 @@ body:has(.side-nav-wrapper.closed) .app-content {
   margin-left: 0;
 }
 
+.app-content.no-sidebar {
+  margin-left: 0;
+}
+
 .page-header {
   display: flex;
   justify-content: space-between;

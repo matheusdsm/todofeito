@@ -21,11 +21,7 @@
     "@prisma/client": "^6.5.0",
     "bcryptjs": "^2.4.3",
     "jose": "^5.2.3",
-<<<<<<< HEAD
-    "next": "^15.3.8",
-=======
     "next": "15.3.8",
->>>>>>> 94264fcd54daeab6cac2dbba76c73aafbb111070
     "prisma": "^6.5.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",

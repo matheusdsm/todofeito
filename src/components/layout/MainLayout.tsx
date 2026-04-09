@@ -5,9 +5,22 @@ import AppSideNav from "./SideNav";
 import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "@carbon/icons-react";
 
-export default function MainLayout({ children }: { children: React.ReactNode }) {
-  const [isSideNavOpen, setIsSideNavOpen] = useState(true);
+interface User {
+  id: string;
+  email: string;
+  role: string;
+}
+
+interface MainLayoutProps {
+  children: React.ReactNode;
+  user: User | null;
+}
+
+export default function MainLayout({ children, user }: MainLayoutProps) {
+  const [isSideNavOpen, setIsSideNavOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+
+  const isAuthenticated = !!user;
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 672);
@@ -17,31 +30,39 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
   }, []);
 
   useEffect(() => {
-    if (isMobile) {
-      setIsSideNavOpen(false);
+    if (isAuthenticated) {
+      if (isMobile) {
+        setIsSideNavOpen(false);
+      } else {
+        setIsSideNavOpen(true);
+      }
     } else {
-      setIsSideNavOpen(true);
+      setIsSideNavOpen(false);
     }
-  }, [isMobile]);
+  }, [isAuthenticated, isMobile]);
 
   return (
     <div className="app-container">
       <AppHeader />
       <div className="app-body">
-        <aside className={`side-nav-wrapper ${isSideNavOpen ? "open" : "closed"}`}>
-          <AppSideNav />
-        </aside>
-        <button
-          className="sidenav-toggle-btn"
-          onClick={() => setIsSideNavOpen(!isSideNavOpen)}
-          aria-label={isSideNavOpen ? "Fechar menu" : "Abrir menu"}
-        >
-          {isSideNavOpen ? <ChevronLeft size={20} /> : <ChevronRight size={20} />}
-        </button>
+        {isAuthenticated && (
+          <aside className={`side-nav-wrapper ${isSideNavOpen ? "open" : "closed"}`}>
+            <AppSideNav />
+          </aside>
+        )}
+        {isAuthenticated && (
+          <button
+            className="sidenav-toggle-btn"
+            onClick={() => setIsSideNavOpen(!isSideNavOpen)}
+            aria-label={isSideNavOpen ? "Fechar menu" : "Abrir menu"}
+          >
+            {isSideNavOpen ? <ChevronLeft size={20} /> : <ChevronRight size={20} />}
+          </button>
+        )}
         <main
-          className="app-content"
+          className={`app-content ${!isAuthenticated ? "no-sidebar" : ""}`}
           onClick={() => {
-            if (isMobile && isSideNavOpen) {
+            if (isAuthenticated && isMobile && isSideNavOpen) {
               setIsSideNavOpen(false);
             }
           }}
