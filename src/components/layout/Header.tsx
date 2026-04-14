@@ -1,12 +1,18 @@
 "use client";
 
 import { Header, HeaderName, HeaderGlobalBar, HeaderGlobalAction, HeaderPanel } from "@carbon/react";
-import { UserAvatar, Notification, Logout } from "@carbon/icons-react";
+import { UserAvatar, Notification, Logout, Menu, Close } from "@carbon/icons-react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-export default function AppHeader() {
+interface HeaderProps {
+  isSideNavOpen?: boolean;
+  onToggleSideNav?: () => void;
+  isAuthenticated?: boolean;
+}
+
+export default function AppHeader({ isSideNavOpen, onToggleSideNav, isAuthenticated }: HeaderProps) {
   const router = useRouter();
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [user, setUser] = useState<{ name: string; email: string; role: string } | null>(null);
@@ -28,6 +34,16 @@ export default function AppHeader() {
 
   return (
     <Header aria-label="TODOFEITO" className="app-header">
+      {isAuthenticated && onToggleSideNav && (
+        <button
+          className="header-menu-btn"
+          onClick={onToggleSideNav}
+          aria-label={isSideNavOpen ? "Fechar menu" : "Abrir menu"}
+          type="button"
+        >
+          {isSideNavOpen ? <Close size={20} /> : <Menu size={20} />}
+        </button>
+      )}
       <HeaderName href="/" prefix="">
         TODOFEITO
       </HeaderName>

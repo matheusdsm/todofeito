@@ -3,7 +3,6 @@
 import AppHeader from "./Header";
 import AppSideNav from "./SideNav";
 import { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight } from "@carbon/icons-react";
 
 interface User {
   id: string;
@@ -43,21 +42,16 @@ export default function MainLayout({ children, user }: MainLayoutProps) {
 
   return (
     <div className="app-container">
-      <AppHeader />
+      <AppHeader 
+        isSideNavOpen={isSideNavOpen} 
+        onToggleSideNav={() => setIsSideNavOpen(!isSideNavOpen)} 
+        isAuthenticated={isAuthenticated} 
+      />
       <div className="app-body">
         {isAuthenticated && (
           <aside className={`side-nav-wrapper ${isSideNavOpen ? "open" : "closed"}`}>
             <AppSideNav />
           </aside>
-        )}
-        {isAuthenticated && (
-          <button
-            className="sidenav-toggle-btn"
-            onClick={() => setIsSideNavOpen(!isSideNavOpen)}
-            aria-label={isSideNavOpen ? "Fechar menu" : "Abrir menu"}
-          >
-            {isSideNavOpen ? <ChevronLeft size={20} /> : <ChevronRight size={20} />}
-          </button>
         )}
         <main
           className={`app-content ${!isAuthenticated ? "no-sidebar" : ""}`}
